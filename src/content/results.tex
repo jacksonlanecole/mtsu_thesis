@@ -1,0 +1,29 @@
+The primary objective in carrying out this project was to build an
+infrastructure to support the investigation into methods of
+optimization of initial simulation parameters based on the output of the
+JSPAM simulations.
+We have accomplished this objective by establishing a working framework with a
+elementary approach at comparison of simulation images and real SDSS DR7, DR8,
+and DR9 images prepared with MergerEx.
+
+There now exists a dedicated
+\texttt{merger} class with member functions that implement most necessary tasks
+relating to the merger data. Rather than deal with data I/O on a case by case
+basis, we can now instantiate this class to encapsulate all necessary data for
+operations common to analysis of mergers in the context with which we are
+concerned. Further, the output from all member functions has been logically
+structured to reduce future headaches that come from handling large volumes
+of file I/O. There also exist several member functions that aid in visualization
+of a particular simulation from start to finish.
+
+The \texttt{merger} class is used extensively in what we dub the JSPAM Command
+Line Interface (\texttt{jspamcli.py}). This program makes interacting with
+the JSPAM code a bit more intuitive and gives the user several modes of
+interaction that we found to be useful in different contexts. Further, we have
+now standardized I/O from JSPAM so that future work on the project can rely on
+predictable I/O behavior.
+
+We also created an option to execute \texttt{basic\_run} asynchronously across
+a variable number of cores. While we have not strictly parallelized
+\texttt{basic\_run}, we've distributed its execution to make more efficient use
+of powerful workstations that are readily available.

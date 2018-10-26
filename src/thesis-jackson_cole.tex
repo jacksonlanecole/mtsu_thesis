@@ -1,0 +1,272 @@
+\documentclass[titlepage, letterpaper, 12pt, oneside]{book}
+% --------------------------------------------------------------------------- %
+% Comment these lines out to remove the watermark
+% --------------------------------------------------------------------------- %
+%\usepackage[printwatermark]{xwatermark}
+%\newwatermark[allpages,color=red!10,angle=90,scale=3.75,xpos=60,ypos=0]
+%{DRAFT\textbullet DRAFT}
+
+% --------------------------------------------------------------------------- %
+% fontspec gives problems if you compile with pdflatex
+% --------------------------------------------------------------------------- %
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+% --------------------------------------------------------------------------- %
+\usepackage[letterpaper]{geometry}
+\geometry{left=1.5in, right=1.25in, top=1.25in, bottom=1.25in}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{pdfpages}
+%\pagenumbering{gobble}
+\usepackage{multicol}
+\usepackage[section]{placeins}    % Place in a section FORCEFULLY!!
+\usepackage{titlesec}             % Important for changing the titles
+\usepackage{blindtext}            % Testing
+\usepackage{booktabs}             % I can't remember what this is for...
+\usepackage{verbatim}
+\usepackage{dirtytalk}            % Use \say{thing you want in quotations}
+\usepackage{csquotes}             % For block quotes
+\definecolor{mtsublue}{cmyk}{1.0,0.44,0,0} % Defines an MTSU blue
+\usepackage[breaklinks=true, colorlinks=false, allbordercolors=mtsublue]{hyperref}
+\usepackage{url}                  % For urls
+\usepackage[labelfont = bf, font = small]{caption} %Allows for use of \caption* for non-labeled captions
+\usepackage{graphicx}
+\graphicspath{ {images/} }   % Put your images in the images subdirectory
+\usepackage{float}
+\usepackage[numbers, round]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{todonotes}
+\usepackage{caption}
+\captionsetup{width = 0.7\textwidth}
+\usepackage{subcaption}
+
+\usepackage{siunitx}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage{mathcomp}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{dirtree}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+    language=python,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=3
+}
+
+\pagestyle{plain}
+% --------------------------------------------------------------------------- %
+% TIKZ STUFF
+% --------------------------------------------------------------------------- %
+\usepackage{tikz}
+\usetikzlibrary{
+    shapes,
+    arrows,
+    decorations.markings,
+    positioning,
+}
+
+% Define block styles
+% --------------------------------------------------------------------------- %
+\tikzset{
+    startstop/.style ={
+        rectangle,
+        rounded corners,
+        minimum width=2cm,
+        minimum height=1cm,
+        text centered,
+        thick,
+        draw,
+    },
+    io/.style = {
+        trapezium,
+        trapezium left angle=70,
+        trapezium right angle=110,
+        text width=2cm,
+        minimum height=1cm,
+        align=center,
+        thick,
+        draw,
+    },
+    process/.style = {
+        rectangle,
+        text width=5cm,
+        minimum height=1cm,
+        align=center,
+        thick,
+        draw,
+    },
+    decision/.style = {
+        diamond,
+        text width=5cm,
+        minimum height=1cm,
+        align=center,
+        thick,
+        draw,
+    },
+}
+\tikzstyle{arrow} = [
+    thick,
+    ->,
+    >=stealth
+]
+% --------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------- %
+% newcommands, newenvironments
+% --------------------------------------------------------------------------- %
+% Writing
+% --------------------------------------------------------------------------- %
+\newcommand{\comm}[1]{\textcolor{red}{[#1]}}    % inline comment command
+
+% Math
+% --------------------------------------------------------------------------- %
+\newcommand{\pprime}{^{\prime}}
+\newcommand{\sn}[2]{#1\times10^{#2}}
+\newcommand{\snu}[6]{#1\times10^{#2}\,^{+\sn{#3}{#4}}_{-\sn{#5}{#6}}}
+\newcommand{\snuwo}[3]{#1\,^{+#2}_{-#3}}
+\newcommand{\unitsb}[1]{\,[\text{#1}]}
+% --------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------- %
+% Formatting
+% --------------------------------------------------------------------------- %
+\renewcommand{\contentsname}{Table of Contents}
+\titleformat{\chapter}
+    [hang]
+    {\raggedright\bfseries\MakeUppercase}
+    {\chaptertitle}
+    {12pt}{}
+    []
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\titleformat{\section}
+    [hang]
+    {\centering\bfseries\uppercase}
+    {\thesection}
+    {12pt}{}
+    []
+\titleformat{\subsection}
+    [hang]
+    {\centering\bfseries}
+    {\thesubsection}
+    {12pt}{}
+    []
+
+\makeatletter
+\renewenvironment{thebibliography}[1]{
+    \section{References}% <-- this line was changed from \chapter* to \section*
+    \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+    \list{\@biblabel{\@arabic\c@enumiv}}%
+    {\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+    \sloppy
+    \clubpenalty4000
+    \@clubpenalty \clubpenalty
+    \widowpenalty4000%
+    \sfcode`\.\@m}
+    {\def\@noitemerr
+        {\@latex@warning{Empty `thebibliography' environment}
+    }%
+    \endlist
+}
+\makeatother
+
+% --------------------------------------------------------------------------- %
+% Author Commands
+% --------------------------------------------------------------------------- %
+\newcommand{\theTitle}{Testing Methods for Machine Comparison of Real and
+Simulated Interacting Galaxy Pair Morphologies}
+\newcommand{\theTitlecaps}{\MakeUppercase{\theTitle}}
+\newcommand{\theAuthor}{Jackson L. Cole}
+\newcommand{\theInstitution}{Middle Tennessee State University}
+% --------------------------------------------------------------------------- %
+
+\begin{document}
+% --------------------------------------------------------------------------- %
+% The following makes equations look much nicer
+% \setlength{\abovedisplayskip}{10pt}
+% \setlength{\belowdisplayskip}{10pt}
+% \setlength{\abovedisplayshortskip}{10pt}
+% \setlength{\belowdisplayshortskip}{10pt}
+% --------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------- %
+% Front Matter
+% --------------------------------------------------------------------------- %
+\frontmatter
+\input{./content/front.tex}
+
+% --------------------------------------------------------------------------- %
+% Abstract
+% --------------------------------------------------------------------------- %
+\section*{Abstract}
+\phantomsection
+\addcontentsline{toc}{section}{Abstract}
+\input{./content/abstract.tex}
+% --------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------- %
+% TOC, LOF, etc.
+% --------------------------------------------------------------------------- %
+\tableofcontents
+\listoffigures
+
+% --------------------------------------------------------------------------- %
+% Main Matter Setup
+% --------------------------------------------------------------------------- %
+% Setup
+\mainmatter
+\doublespacing
+
+% --------------------------------------------------------------------------- %
+% Content
+% --------------------------------------------------------------------------- %
+\section{Introduction}
+\input{./content/introduction.tex}
+
+\section{Background}
+\input{./content/background.tex}
+
+\section{Methodology}\label{sec: methods}
+\input{./content/methodology.tex}
+
+\section{Results}
+\input{./content/results.tex}
+
+\section{Analysis}
+\input{./content/analysis.tex}
+
+\section{Conclusions}
+\input{./content/conclusions.tex}
+% --------------------------------------------------------------------------- %
+
+% --------------------------------------------------------------------------- %
+% Bibliography
+% --------------------------------------------------------------------------- %
+\clearpage
+\bibliography{thesisbib}
+% --------------------------------------------------------------------------- %
+
+\end{document}

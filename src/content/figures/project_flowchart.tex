@@ -1,0 +1,64 @@
+\begin{figure}[H]
+    \label{fig: flowchart}
+    \centering
+    \begin{tikzpicture}[]
+        \tikzstyle{every node}=[font=\small]
+        \node [startstop] (start)
+        {START};
+
+        \node [io, below = of start, text width=6cm] (inData1)
+        {SDSS DR7 image\\(processed with MergerEx \cite{holincheckThesis})};
+
+        \node [process, below = of inData1, text width=12cm] (inData2)
+        {target SDSSID, run number(s), n1\_particles, n2\_particles};
+
+        \node [io, below = of inData2, text width=6cm] (inData3)
+        {Citizen Science initial conditions\\from run file for target SDSSID};
+
+        \node [process, below = of inData3] (JSPAM)
+        {JSPAM (Wallincode)};
+
+
+        \node [process, below = of JSPAM] (directories)
+        {Create appropriate directory structure};
+
+        \node [io, below = of directories, text width=12cm] (initialFile)
+        {
+        \{SDSSID\}.\{run number\}.i.\{n1\_particles\}.\{n2\_particles\}.txt\\
+        \{SDSSID\}.\{run number\}.f.\{n1\_particles\}.\{n2\_particles\}.txt\\
+        info.txt (from MergerEx \cite{holincheckThesis})
+        };
+
+        \node [process, below = of initialFile] (imageCreator)
+        {Create images};
+
+
+        \node [io, below = of imageCreator, text width = 2cm] (machineScore)
+        {Machine score};
+
+        \node [process, left = of machineScore] (comp)
+        {Comparison code};
+
+        \node [startstop, right = of machineScore] (stop)
+        {STOP};
+
+        \draw [arrow] (start) -- (inData1);
+        \draw [arrow] (inData1) -- (inData2);
+        \draw [arrow] (inData2) -- (inData3);
+        \draw [arrow] (inData3) -- (JSPAM);
+        \draw [arrow] (JSPAM) -- (directories);
+        \draw [arrow] (directories) -- (initialFile);
+        \draw [arrow] (initialFile) -- (imageCreator);
+        \draw [arrow] (imageCreator) -| (comp);
+        \draw [arrow] (comp) -- (machineScore);
+        \draw [arrow] (machineScore) -- (stop);
+
+
+
+    \end{tikzpicture}
+    \caption[Project Flowchart]{
+        Project flowchart. Here, it should be noted that our primary goal
+        was developing a framework for testing comparison codes. This endeavor
+        will likely see work in the near future.
+    }
+\end{figure}

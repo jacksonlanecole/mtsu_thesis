@@ -1,0 +1,118 @@
+The primary question regarding the observed disturbed morphological features
+of interacting galaxy pairs,
+described as \say{bridges and tails}, related to the mechanism by which they
+were formed.
+In 1972, \citet{Toomre1972} presented some of the first widely
+accepted supporting
+evidence of what they tellingly referred to as \say{old-fashioned gravity}
+as a basis for the disturbed morphologies seen in apparently-neighboring
+galaxies. \citet{German} provided the
+foundation for their work, but their results were largely rejected in the 1950s
+and 1960s when the complexities of the bridges and tails were thought to
+result from equally complex mechanisms.
+During this period, astrophysicists were in some cases vehemently
+opposed to using gravitational interactions as the basis of explanation of
+disturbed morpholoigcal features. However, it was then
+shown using restricted three-body simulations of colliding galaxies
+that the supposed static nature of transient tidal forces between
+members of galaxy pairs matters less when considering the intensity
+of those tidal forces \cite{Toomre1972}.
+
+
+\citet{Toomre1972} focuses on four simple examples of interacting systems, each
+of which serve to illustrate their proposal that the main contributors to the
+bridges and tails are kinematic and can be described simply in terms of gravity.
+They purposely initialize slow, parabolic encounters between members of the
+galaxy pair, as they assume that faster encounters result in thinner tidal
+features. This immediately seems like an ad hoc initialization, in which
+one \textit{should} find cause for worry that the result may have been biased
+towards the desired result. However, they justify their logic by making the
+following assumptions. Numerous observable encounters of galaxies traveling along
+hyperbolic orbits seems highly improbable, and accordingly, observational data
+of the interacting pairs point to the interaction \textit{not} having been a
+chance encounter. It seems much more probable that the interacting pair were
+already bound, and while still highly eccentric, their approach orbits were
+still sub-parabolic. In their work, they initialize a primary disk that
+is composed of a point mass at the center, and several concentric rings of
+test particles surrounding. The secondary \say{disk} is simply a point mass
+representing the center of the secondary galaxy. All numerical integrations were
+performed separately for each particle in the primary disk, such that the
+computational time could be optimized for \textit{each particle} in the system
+\cite{Toomre1972}.
+
+In modern times, the primary challenges involved in simulating
+interactions between galaxies are not very far removed from those of
+computational economy which were highly necessary considerations in the work
+of the brothers Toomre in the early 1970s, although we now certainly perform
+the necessary integration for \textit{each} particle at \textit{each} time step.
+In many cases, simulations of galactic collisions still make use of restricted
+three-body codes similar to those used in the original work in the field.
+Restricted three-body codes
+only require that the gravitational force between each of the two most massive
+bodies in the system and a particular test mass to be calculated. These work
+when the gravitational interactions between each smaller (essentially massless)
+test mass in the system is assumed to be negligible in comparison to those
+involving the larger masses. The primary benefit is that they are significantly
+more computationally economical than their $n$-body counterpart.
+These are also considered valid, as the self gravity of the galactic disks is
+assumed to
+be almost negligent in comparison to the gravitational interaction of the two
+galactic centers and each smaller mass \cite{Toomre1972}. Of course,
+computational economy still is a factor, but its role in guiding the methods
+for simulations has changed.
+
+Today, the computational power available to researchers
+exceeds by far what was available in the last six decades. Whereas in decades
+past, restricted three-body codes were used \textit{primarily} on the basis of
+computational economy, we can now use these same types of codes on the basis
+of computational economy \textit{when our solution space still contains
+\say{bad} solutions.} Essentially, we can now use the faster three-body
+algorithms
+to accurately simulate significant kinematic interactions (e.g. those between
+each point mass and the centers of each galactic disk), and then use either
+fitness-functions,
+automatic image recognition and classification via machine learning techniques,
+Citizen Science, or some combination of the three to constrain the solution
+space to only \say{good} or \say{okay} solutions. From our \say{good} solutions,
+we can begin to use full $n$-body simulations for further analysis.
+
+It should be reiterated that in comparison to restricted three-body codes,
+full $n$-body simulations are naturally computationally expensive.
+However, simulations of dynamical processes within the disks of galaxies
+are better served by the computational complexity of $n$-body codes than are
+purely kinematic processes under the assumptions given by
+\citet{Toomre1972}.
+If the initial goal of a particular simulation can be oriented
+toward finding a valid solution for the initial conditions that contribute to
+the observed morphological features,
+restricted three-body codes, such as JSPAM \cite{Wallin2016}, serve well
+to lessen the computational overhead in running large numbers of simulations
+with reasonable resolution.
+Rather than immediately deal
+with the computationally expensive approach of calculating the self gravity
+within the disk material (among the stars) using $n$-body codes,
+researchers can use restricted three-body codes to run significantly large
+numbers of simulations
+relatively quickly, which allows simulation of solutions across the
+\textit{entire} solution space.
+%Restricted three-body codes, and specifically JSPAM will be discussed further in
+%\ref{sec: methods}.\ref{ssec: jspam}.
+
+In short, we want to make efficient use of computational time
+and to reduce the length of time the human-in-the-loop must spend
+\say{in the loop.}
+In recent years, the Galaxy Zoo project made use of what essentially was a
+human fitness-function comprised of Citizen Scientists to review
+over three million simulations \cite{Holincheck2015}.
+However, as of writing of \citet{Holincheck2015}, there existed no general
+purpose machine fitness-function for use in determining the level of
+convergence on observed morphologies of interacting galaxies. This work aims
+primarily to develop a framework for testing general purpose machine
+fitness-functions.
+The simulated data come from the JSPAM code, found at
+\texttt{https://github.com/JSPAM-Manga/WallinCode}; this is a restricted
+three-body code originally written in FORTRAN that is described in
+\citet{Wallin2016}.
+
+The working fork of the project is currently in regular development and can be
+found at \texttt{https://github.com/jacksonlanecole/WallinCode}.

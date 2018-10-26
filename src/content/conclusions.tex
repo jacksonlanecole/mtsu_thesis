@@ -1,0 +1,27 @@
+While our goal of establishing a framework for testing various fitness functions
+and interacting with the JSPAM code has been achieved, it is clear that the
+actual fitness function used is decidedly \textit{not} the ideal fitness
+function to use in the future. That being said, we expect that the framework
+we have created will be useful in that it lessens the overhead necessary to
+bootstrap a project using the JSPAM code for its simulation software by
+eliminating the need to create ad-hoc methods for interacting with the
+simulation data. At this point, users are instructed on how to best interact
+with the software for their needs using \texttt{jspamcli.py}, and there is a
+clear method by which the simulation output data is stored and organized.
+
+Further, users now have available to them in the project repository all
+available sets of initial simulation parameters that received a Citizen Science
+score, as well as a directory containing real color and calibrated (to the needs
+of the comparison code) target photographic images and initial simulation
+parameter files all organized by the target name.
+
+Because this framework is now well established, we can easily set up a batch run
+file to produce \textit{all} 66,395 sets of run data and then the associated
+rendered images. Essentially, this gives us a scored set of simulation data that
+can serve as a significant training set on which to train models in future
+attempts at applying appropriate machine learning algorithms to quickly reduce
+the solution space presented to a human for analysis to the \say{best of the
+best.}
+
+While this project has not arrived at scientific results, we intend for our
+heavy lifting to aid in all future projects electing to use the JSPAM code.
