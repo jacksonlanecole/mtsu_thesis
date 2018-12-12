@@ -1,0 +1,28 @@
+When run from the command line, the JSPAM software accepts a string containing
+estimations of initial conditions that result in the observed morphologies.
+Files containing the initial condition strings for each target are found at
+\url{https://data.galaxyzoo.org/mergers.html}, but in order for a new user to
+get started on the project, they must download one, several, or all of the files
+containing the thousands of sets of initial conditions. In order to simplify
+this process, the module \texttt{get\_target\_data} is included in the
+\texttt{merger} package that scrapes
+\url{https://data.galaxyzoo.org/mergers.html} for all of the available files to
+download, and then subsequently downloads the requested file or files, and
+unzips to the correct location. There is also an interactive feature that can be
+selected via an argument passed to the function. As of right now, all data are
+present in the project repository and were downloaded and organized using this
+module.
+
+In many cases during this project, we wanted to work only with
+initial conditions that result in simulations that would have received a
+Citizen Science score, and therefore elected to remove
+sets of initial conditions that resulted in morphologies that were rejected
+in the citizen science effort. To do this, a small, ad hoc script was written
+that can now be found in the \texttt{archive} directory in the project
+repository.
+The input data files that contain the initial simulation
+parameters are located in the \texttt{input} directory
+(\texttt{jspamcli.py} expects this to be their location).
+These have been reduced in size from the
+original files found at \texttt{https://data.galaxyzoo.org/mergers.html}, as
+they now contain only initial simulation parameters from scored runs.

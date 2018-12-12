@@ -1,0 +1,38 @@
+\begin{figure}[H]
+    \centering
+    %\begin{tikzpicture}[scale=0.5, every node/.style{scale=0.5}]
+    \begin{tikzpicture}
+        \linespread{1}
+        \begin{class}[font=\ttfamily\footnotesize, text width=12cm]{MergerRun}{0,0}
+            \attribute{info : dictionary}
+            \attribute{name : string}
+            \attribute{height : Size instance}
+            \attribute{width : Size instance}
+            \attribute{dimensions : Dimensions instance}
+            \attribute{filename : string}
+            \attribute{humanscores\_filename : string}
+            \attribute{run : integer}
+            \attribute{init : string}
+            \attribute{structure\_created : boolean}
+            \attribute{target\_dirs : string(path/to/target\_directory)}
+            \attribute{primary : Galaxy instance}
+            \attribute{secondary : Galaxy instance}
+            \attribute{all\_point\_data : list}
+            \attribute{scores : list}
+            \operation[0]{\_\_init\_\_(path\_to\_info\_file, n1\_particles, n2\_particles, run\_number, init\_run\_string) : MergerRun instance}
+            \operation[0]{make\_info\_dict(path\_to\_info\_file) : dictionary}
+            \operation[0]{setup\_structure(path\_to\_info\_file) : dictionary}
+            \operation[0]{existing\_structure()}
+            \operation[0]{create()}
+            \operation[0]{get\_scores()}
+            \operation[0]{write\_scores()}
+            \operation[0]{load\_data() : list}
+            \operation[0]{fill\_all\_data() : list}
+            \operation[0]{plotting\_2d() : figure}
+            \operation[0]{plotting\_3d() : figure}
+            \operation[0]{make\_gif()}
+        \end{class}
+    \end{tikzpicture}
+    \caption[Class diagram: MergerRun]{Class diagram: MergerRun}
+    \label{fig:cdmergerrun}
+\end{figure}

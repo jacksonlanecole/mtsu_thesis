@@ -1,0 +1,37 @@
+While ultimately, our primary interest is the observed morphology of some
+interacting galaxy pair, we need to identify a significant number of parameters
+relating to the sizes and orientations of the objects in the sky and in images,
+respectively, as well as the velocities of the primary and secondary disks.
+Essentially, we want to have available to us all possible data points describing
+the merger as it is observed and the positional data to systematically
+locate each object in the produced images for further analysis.
+
+The software we use for target image preparation and for constraining the
+initial simulation parameter values is MergerEx, which is described in
+\citet{holincheckThesis} and is found at
+\texttt{https://github.com/aholinch/MergerEx}. MergerEx greatly simplifies and
+speeds up the process of querying various astronomical image servers for
+specific sky coordinates, calibrating the images, and estimating initial
+parameters that describe the sizes, orientations, and velocities of the
+primary and secondary galactic disks in the merger.
+
+Because the primary data in which we are interested is only the morphology,
+we can rely on whichever images display the morphological features most clearly.
+The MergerEx software allows us to choose the most appropriate image source from
+either the NASA/IPAC Extragalactic Database/STScI Digital Sky Survey (NED/DSS),
+or Sloan Digital Sky Survey Data Release 7, 8, or 9 (SDSS DR7, DR8, DR9).
+For our purposes, neither the wavelengths comprising the images retrieved nor
+the source matter as long as the distribution of luminous stars in the system is
+clearly seen in the image~\cite{Holincheck2015}.
+In some cases,~\citet{Holincheck2015}
+describes that these images can even come from non-scientific data sets as long
+as the previously mentioned condition is met.
+
+\citet{Holincheck2015} provides a list of 54 SDSS and 8 Hubble Space Telescope
+(HST) targets. For each of these targets, the process of estimation
+of the disks and subsequently the parameter ranges must be carried out
+as described in Appendix C of~\citet{holincheckThesis}.
+In the project repository's \texttt{targets} directory,
+there now exists a Python script that allows the user to keep track
+of their work as they progress through all 62 targets, or through any number of
+targets that are defined within that directory's \texttt{all\_targets.txt} file.

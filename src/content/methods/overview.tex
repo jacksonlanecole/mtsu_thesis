@@ -1,0 +1,54 @@
+%One of the main goals for the JSPAM project as a whole
+%is development of a general purpose fitness-function that would allow
+%for the generation of preliminary machine scores for all sets of initial
+%simulation parameters present for each of the 62 Galaxy Zoo: Mergers targets
+%found at \texttt{https://data.galaxyzoo.org/mergers.html}.
+
+The Galaxy Zoo: Mergers project produced ranked scores that are indicative of
+the degree to which the morphologies resulting from different sets of
+initial conditions correlate with their real counterparts. Essentially, the
+scores should relate to how closely the simulated galaxy merger looks like the
+real thing.
+These rankings are the product of a substantial Citizen Science effort comprising
+the Galaxy Zoo: Mergers project, and at the completion of the project,
+66,395 sets of initial parameters had been scored through volunteer review of
+over 3 million simulations~\cite{Holincheck2015}.
+While this effort was successful, moving towards a general-purpose machine
+scoring mechanism for these types of simulations would allow for human effort to
+be reserved for classifying only solutions that have a reasonable chance
+of being correct.
+
+An ideal mechanism would recognize and remove morphologies
+that clearly do not match real life; this in contrast with the
+current \textit{modus operandi}, which in some cases results in human effort
+being wasted on classifying a \say{clearly bad} solution as incorrect.
+If we can task a computer with making classifications that require
+less acute discernment, humans in-the-loop can be tasked with
+performing classifications that take advantage of the visual facilities of
+the human eye.
+Therefore, we operate under the assumption that an ideal machine scoring
+mechanism should be able to closely recreate the results of the Galaxy Zoo:
+Mergers Citizen Science effort, and that human volunteers could improve upon
+those results from that point.
+
+In support of these efforts, and to initiate the reduction of the role of the
+human-in-the-loop, the primary goal of our work focuses on
+developing an interface and framework that can be used to aid users in
+interaction with JSPAM, deal with the challenges of data storage through
+standard methods, and aid in future work on projects using JSPAM.
+Running the simulation software efficiently, storing and organizing the large
+volumes of data that are inherent to this project, accessing these data
+efficiently, image creation, and image analysis, are all intrinsic tasks in
+this project, and we aim to provide methods for doing all of these things
+effectively.
+We recognize that further work must be done in developing fitness-functions,
+but expect that our work will aid further success in doing so and should
+greatly reduce the overhead for continuing the
+work on these types of projects.
+
+The methods described in this section will closely adhere to the order in which
+they appear in Figure~\ref{fig:flowchart}, and will end with a
+discussion of \texttt{jspamcli.py}, which handles most of the aforementioned
+tasks, in subsection~\ref{subsec:jspamcli}.
+\clearpage
+\subimport{../figures/}{project_flowchart.tex}

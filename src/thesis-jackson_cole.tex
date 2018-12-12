@@ -3,23 +3,61 @@
 % Comment these lines out to remove the watermark
 % --------------------------------------------------------------------------- %
 %\usepackage[printwatermark]{xwatermark}
-%\newwatermark[allpages,color=red!10,angle=90,scale=3.75,xpos=60,ypos=0]
+%\newwatermark[allpages,color=red!10,angle=90,scale=3.75,xpos=60,ypos=0]%
 %{DRAFT\textbullet DRAFT}
 
 % --------------------------------------------------------------------------- %
 % fontspec gives problems if you compile with pdflatex
 % --------------------------------------------------------------------------- %
-\usepackage{fontspec}
-\setmainfont{Times New Roman}
+\usepackage[titletoc, toc]{appendix}
+\usepackage{times}
+\usepackage[
+    activate={true,nocompatibility},
+    final,
+    tracking=true,
+    protrusion=true,
+    kerning=true,
+    spacing=true,
+    factor=1100,
+    stretch=10,
+    shrink=10,
+]{microtype}
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+\SetProtrusion{encoding={*},family={bch},series={*},size={6,7}}
+              {1={ ,750},2={ ,500},3={ ,500},4={ ,500},5={ ,500},
+               6={ ,500},7={ ,600},8={ ,500},9={ ,500},0={ ,500}}
+\SetExtraKerning[unit=space]
+    {encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
+    {\textendash={400,400}, % en-dash, add more space around it
+     "28={ ,150}, % left bracket, add space from right
+     "29={150, }, % right bracket, add space from left
+     \textquotedblleft={ ,150}, % left quotation mark, space from right
+     \textquotedblright={150, }} % right quotation mark, space from left
+\SetExtraKerning[unit=space]
+   {encoding={*}, family={qhv}, series={b}, size={large,Large}}
+   {1={-200,-200}, 
+    \textendash={400,400}}
+\SetTracking{encoding={*}, shape=sc}{0}
 % --------------------------------------------------------------------------- %
 \usepackage[letterpaper]{geometry}
-\geometry{left=1.5in, right=1.25in, top=1.25in, bottom=1.25in}
+\geometry{%
+    left=1.5in,
+    right=1.25in,
+    top=1.25in,
+    bottom=1.25in,
+}
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{pdfpages}
-%\pagenumbering{gobble}
 \usepackage{multicol}
-\usepackage[section]{placeins}    % Place in a section FORCEFULLY!!
+\usepackage[]{xcolor}
+\usepackage[
+    section,
+]{placeins}    % Place in a section FORCEFULLY!!
 \usepackage{titlesec}             % Important for changing the titles
 \usepackage{blindtext}            % Testing
 \usepackage{booktabs}             % I can't remember what this is for...
@@ -27,15 +65,26 @@
 \usepackage{dirtytalk}            % Use \say{thing you want in quotations}
 \usepackage{csquotes}             % For block quotes
 \definecolor{mtsublue}{cmyk}{1.0,0.44,0,0} % Defines an MTSU blue
-\usepackage[breaklinks=true, colorlinks=false, allbordercolors=mtsublue]{hyperref}
+\usepackage[
+    breaklinks=true,
+    colorlinks=false,
+]{hyperref}
 \usepackage{url}                  % For urls
-\usepackage[labelfont = bf, font = small]{caption} %Allows for use of \caption* for non-labeled captions
+%\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage[
+    labelfont=bf,
+    font=small,
+]{caption} %Allows for use of \caption* for non-labeled captions
 \usepackage{graphicx}
-\graphicspath{ {images/} }   % Put your images in the images subdirectory
+\graphicspath{{images/}}   % Put your images in the images subdirectory
 \usepackage{float}
-\usepackage[numbers, round]{natbib}
-\bibliographystyle{plainnat}
-\usepackage{todonotes}
+\usepackage{mdframed}
+\mdfdefinestyle{mystyle}{%
+    backgroundcolor=red!25,
+    leftmargin=0.5cm,
+    linecolor=black,
+}
+
 \usepackage{caption}
 \captionsetup{width = 0.7\textwidth}
 \usepackage{subcaption}
@@ -45,88 +94,15 @@
 \usepackage{esint}
 \usepackage{mathcomp}
 
-\usepackage{listings}
-\usepackage{color}
-\usepackage{dirtree}
-
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
-\lstset{frame=tb,
-    language=python,
-    aboveskip=3mm,
-    belowskip=3mm,
-    showstringspaces=false,
-    columns=flexible,
-    basicstyle={\small\ttfamily},
-    numbers=none,
-    numberstyle=\tiny\color{gray},
-    keywordstyle=\color{blue},
-    commentstyle=\color{dkgreen},
-    stringstyle=\color{mauve},
-    breaklines=true,
-    breakatwhitespace=true,
-    tabsize=3
-}
-
 \pagestyle{plain}
-% --------------------------------------------------------------------------- %
-% TIKZ STUFF
-% --------------------------------------------------------------------------- %
-\usepackage{tikz}
-\usetikzlibrary{
-    shapes,
-    arrows,
-    decorations.markings,
-    positioning,
-}
+\usepackage{import}
 
-% Define block styles
-% --------------------------------------------------------------------------- %
-\tikzset{
-    startstop/.style ={
-        rectangle,
-        rounded corners,
-        minimum width=2cm,
-        minimum height=1cm,
-        text centered,
-        thick,
-        draw,
-    },
-    io/.style = {
-        trapezium,
-        trapezium left angle=70,
-        trapezium right angle=110,
-        text width=2cm,
-        minimum height=1cm,
-        align=center,
-        thick,
-        draw,
-    },
-    process/.style = {
-        rectangle,
-        text width=5cm,
-        minimum height=1cm,
-        align=center,
-        thick,
-        draw,
-    },
-    decision/.style = {
-        diamond,
-        text width=5cm,
-        minimum height=1cm,
-        align=center,
-        thick,
-        draw,
-    },
-}
-\tikzstyle{arrow} = [
-    thick,
-    ->,
-    >=stealth
-]
-% --------------------------------------------------------------------------- %
+\subimport{./shared/}{preamble.tex}
+\subimport{./shared/}{project_definitions.tex}
 
 % --------------------------------------------------------------------------- %
 % newcommands, newenvironments
@@ -147,13 +123,14 @@
 % --------------------------------------------------------------------------- %
 % Formatting
 % --------------------------------------------------------------------------- %
+\newcommand{\sectionbreak}{\clearpage}
 \renewcommand{\contentsname}{Table of Contents}
-\titleformat{\chapter}
-    [hang]
-    {\raggedright\bfseries\MakeUppercase}
-    {\chaptertitle}
-    {12pt}{}
-    []
+%\titleformat{\chapter}
+%    [hang]
+%    {\raggedright\bfseries\MakeUppercase}
+%    {\chaptertitle}
+%    {12pt}{}
+%    []
 \renewcommand{\thesection}{\Roman{section}}
 \renewcommand{\thesubsection}{\Alph{subsection}}
 \titleformat{\section}
@@ -169,8 +146,11 @@
     {12pt}{}
     []
 
+% --------------------------------------------------------------------------- %
+% Setup
+% --------------------------------------------------------------------------- %
 \makeatletter
-\renewenvironment{thebibliography}[1]{
+\renewenvironment{thebibliography}[1]{%
     \section{References}% <-- this line was changed from \chapter* to \section*
     \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
     \list{\@biblabel{\@arabic\c@enumiv}}%
@@ -193,14 +173,9 @@
 }
 \makeatother
 
+
 % --------------------------------------------------------------------------- %
-% Author Commands
-% --------------------------------------------------------------------------- %
-\newcommand{\theTitle}{Testing Methods for Machine Comparison of Real and
-Simulated Interacting Galaxy Pair Morphologies}
-\newcommand{\theTitlecaps}{\MakeUppercase{\theTitle}}
-\newcommand{\theAuthor}{Jackson L. Cole}
-\newcommand{\theInstitution}{Middle Tennessee State University}
+% Definitions
 % --------------------------------------------------------------------------- %
 
 \begin{document}
@@ -232,6 +207,7 @@ Simulated Interacting Galaxy Pair Morphologies}
 % --------------------------------------------------------------------------- %
 \tableofcontents
 \listoffigures
+\lstlistoflistings
 
 % --------------------------------------------------------------------------- %
 % Main Matter Setup
@@ -244,23 +220,25 @@ Simulated Interacting Galaxy Pair Morphologies}
 % Content
 % --------------------------------------------------------------------------- %
 \section{Introduction}
-\input{./content/introduction.tex}
+\subimport{./content/}{introduction.tex}
 
 \section{Background}
-\input{./content/background.tex}
+\subimport{./content/}{background.tex}
 
-\section{Methodology}\label{sec: methods}
-\input{./content/methodology.tex}
+\section{Methodology}\label{sec:methods}
+\subimport{./content/}{methodology.tex}
 
 \section{Results}
-\input{./content/results.tex}
+\subimport{./content/}{results.tex}
 
-\section{Analysis}
-\input{./content/analysis.tex}
+%\section{Analysis}
+%\subimport{./content/}{analysis.tex}
 
 \section{Conclusions}
-\input{./content/conclusions.tex}
+\subimport{./content/}{conclusions.tex}
+
 % --------------------------------------------------------------------------- %
+
 
 % --------------------------------------------------------------------------- %
 % Bibliography
@@ -268,5 +246,35 @@ Simulated Interacting Galaxy Pair Morphologies}
 \clearpage
 \bibliography{thesisbib}
 % --------------------------------------------------------------------------- %
+
+\begin{appendices}
+    % ----------------------------------------------------------------------- %
+    % Settings
+    % ----------------------------------------------------------------------- %
+    \titleformat{\section}
+        [hang]
+        {\centering\bfseries\uppercase}
+        {\appendixname\enspace\thesection}
+        {12pt}{}
+        []
+    \titleformat{\subsection}
+        [hang]
+        {\centering\bfseries}
+        {\thesubsection}
+        {12pt}{}
+        []
+
+    % ----------------------------------------------------------------------- %
+    % Content
+    % ----------------------------------------------------------------------- %
+    \section{Resources}
+    \subimport{./content/appendicies/}{project_resources.tex}
+%
+%    \section{jspamcli Usage}
+%    \subimport{./content/appendicies/}{usage.tex}
+%
+%    \section{Usage of Various Utilities}
+\end{appendices}
+
 
 \end{document}

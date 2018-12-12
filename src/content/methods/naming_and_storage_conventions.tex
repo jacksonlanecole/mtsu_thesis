@@ -1,0 +1,69 @@
+We heavily explored several alternative methods for passing
+large volumes of data between
+the working languages in the project (Fortran90, Python, C++), as writing out
+data to flat files carries an intrinsic overhead that could be avoided
+altogether.
+Binary data
+formats such as HDF5 seemed promising initially, but the benefit of having a
+small improvement in speed at run-time did not outweigh the cost of having to
+write HDF5 handlers in all of the working languages of the project.
+
+We were also well aware that many languages have interfaces for passing
+arrays and other common data types between languages (e.g. Python's ctypes
+library, or using some implementation of a boost wrapper).
+However, for similar reasons to that which kept us from pursuing HDF5, we opted
+not to write custom interfaces for passing data. While we would likely have seen
+a speed increase at run-time if we were also creating and analyzing images in
+the loop, the overhead of writing three separate interfaces was not outweighed
+by the marginal gains in efficiency we would have seen.
+Therefore, data storage using flat ASCII files are the working paradigm
+until other solutions are deemed necessary.
+
+Because we are using flat files, we adopted a standard naming convention for all
+output files regardless of their storage location. For any one particular run of
+the JSPAM code, we identify a unique output file via the SDSSID or name used,
+the run number corresponding to the line number in the input file, a flag
+indicating whether the data corresponds to the initial output or the final
+output, and the number of particles initialized in each galaxy. The output files
+for a unique run would have the form shown in Listing~\ref{listing:uniqueform}.
+%
+\begin{samepage}
+\begin{lstlisting}[caption={Output files from JSPAM}, label={listing:uniqueform}]
+name.run_number.i.n1_particles.n2_particles.txt
+name.run_number.f.n1_particles.n2_particles.txt
+\end{lstlisting}
+\end{samepage}
+%
+Further, we needed to have an appropriate directory tree set up for any
+particular run. We can visualize this tree in Figure \ref{fig:the_tree}
+%
+\begin{figure}[H]
+    \dirtree{%
+        .1 root.
+        .2 output.
+        .3 \{SDSSID\}.
+        .4 \{SDSSID\}.humanscores.txt.
+        .4 run0000.
+        .5 \{SDSSID\}.0000.i.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .5 \{SDSSID\}.0000.f.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .4 run0001.
+        .5 \{SDSSID\}.0001.i.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .5 \{SDSSID\}.0001.f.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .4 run0002.
+        .5 \{SDSSID\}.0002.i.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .5 \{SDSSID\}.0002.f.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .4 run\ldots.
+        .5 \{SDSSID\}.\{\ldots\}.i.\{n1\_particles\}.\{n2\_particles\}.txt.
+        .5 \{SDSSID\}.\{\ldots\}.f.\{n1\_particles\}.\{n2\_particles\}.txt.
+    }
+    \caption[Output directory tree]{Output directory tree}
+    \label{fig:the_tree}
+\end{figure}
+%
+At this point \texttt{jspamcli.py} only needs minor additions to work with
+the rendered image creation software and difference code which comprised the
+other half of this project. Incorporating all pieces of the project in an
+automated machine learning framework would require only a few augmentations
+to the existing code, and would support the ultimate goal of optimizing
+the parameter space for better convergence on solutions.
+This is likely to be explored in continuing research on this project.

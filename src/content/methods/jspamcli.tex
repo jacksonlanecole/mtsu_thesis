@@ -1,0 +1,129 @@
+Usage of the original JSPAM code described in \citet{Wallin2016}
+requires a string argument of initial simulation parameters, and accepts a
+number of options to specify run settings and simulation quantities such as
+the number of particles to be initialized around each center-of-mass.
+While all of the existing functionality has been fundamentally unchanged, we
+set out to make interaction with the software more user friendly and to
+initiate the minimization of the human-in-the-loop by automating several
+tedious necessary actions. The result incorporates the previously mentioned
+classes as a command line interface for JSPAM,
+\texttt{jspamcli.py},
+which now handles most of the overhead associated with running the software.
+
+\texttt{jspamcli.py} can be used in four modes that are summarized
+in~\ref{table:jspamcli_table}.
+Mode $1$ (\texttt{python jspamcli.py -i}) allows for users to process runs for
+single targets interactively. This is the most straightforward usage, and allows
+for future users to become familiar with the software.
+The user is given an option to download files used for input using
+the \texttt{get\_target\_data} module, and then is allowed to select from
+available input files to run the program.
+The user is then asked to enter the number of particles to be initialized in
+each galaxy. Then, the interface proceeds in
+essentially the same way as in the batch processing modes, which are here
+described.
+
+Before \texttt{jspamcli.py} can be run in any of the batch processing modes
+(modes $2\to4$), one or more batch run files must be specified. If none are
+specified, the program writes out a sample batch run file named
+\texttt{sample.txt} in the \texttt{batch\_run\_file} directory.
+The contents of a sample batch run file can be seen in
+Listing~\ref{listing:samplebrf}.
+%
+\begin{lstlisting}[caption={Sample batch run file}, label={listing:samplebrf}]
+#target,n1_particles,n2_particles,first_run,last_run
+587722984435351614,500,500,100,100
+\end{lstlisting}
+%
+However, if in the last column of a row there is the keyword \texttt{ALL}, the
+values given for \texttt{first\_run} and \texttt{last\_run} are ignored
+and all available non-rejected scored runs are processed. This file would read
+as shown in Listing~\ref{listing:samplebrfa}.
+%
+\begin{lstlisting}[caption={Batch run file for all runs}, label={listing:samplebrfa}]
+#target,n1_particles,n2_particles,first_run,last_run
+587722984435351614,500,500,000,000,ALL
+\end{lstlisting}
+%
+Modes $2\to4$ are variations on batch processing modes and all use the
+available batch run files.
+Mode $2$ (\texttt{python jspamcli.py -bi}) essentially gives the user an
+introduction to how batch processing is handled by \texttt{jspamcli.py} and is
+useful in contexts where the job to process does not have to be left running
+for a exceedingly long duration of time. This mode eventually does a batch
+processing job, but walks the user through the steps to successfully create a
+batch run file.
+
+Mode $3$ (\texttt{python jspamcli.py -b}) has all of the functionality of
+mode $2$ but none of the interactivity.
+This mode runs as one would expect and processes all desired runs sequentially.
+
+Mode $4$ (\texttt{python jspamcli.py -bm})
+contains methods for distributing the execution all instances of the
+\texttt{basic\_run} required to complete the batch processing job across
+multiple processes on multiple cores.
+We wanted to minimize the need to change the original Fortran90 code, so the
+Python \texttt{multiprocessing} module was used to handle distributing calls
+to JSPAM to available worker processes, effectively increasing the speed with
+which any batch processing job can be completed by a factor of the number of
+cores available for use (loosely).
+While this does not necessarily reduce the time needed for any one simulation,
+as JSPAM has not necessarily been parallelized itself,
+this does reduce the amount of time
+required to run a large number of simulations fairly quickly just by simply
+doing more things at the same time. We can fairly easily significantly
+speed up our workflow by making use of the cores available to us on any
+workstation or machine.
+
+Within the \texttt{multiprocessing} module is a \texttt{Pool} object that
+accepts an argument indicating the number of worker processes to be spawned.
+Upon execution of \texttt{jspamcli.py}, the argument passed to the program
+indicating the requested number of cores to be used is used to instantiate the
+\texttt{Pool} object, although we limit the number of cores to be used to half
+of those available to preserve resources and good relations with other users.
+Each execution of \texttt{basic\_run} using a
+unique set of simulation parameters is considered to be completely
+independent of all other processes, as the inputs for each simulation do not
+depend on the results of the previous simulations. Therefore, we care very
+little if all simulations requested run sequentially. We can therefore use the
+\texttt{map\_async} module to distribute calls to the appropriate calling
+function across the spawned worker processes.
+
+While we do not need to have any shared memory in order to complete a
+\say{distributed} run of \texttt{basic\_run}, we still must consider the fact
+that the program writes out to the same directory with each iteration (or at the
+end of each run).
+Again, the processes are not using a shared memory
+location during the run, but they are writing out these files to the same location.
+The simple fix was to add an \texttt{-m} flag in \texttt{basic\_run} that
+indicates that the program should insert a distinguishing number corresponding
+to the process number in the name of the file. This allows for
+\texttt{jspamcli.py} to organize the output files appropriately.
+%
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{clll}
+    \toprule
+    Mode & Option       & Behavior                        & Arguments \\
+    \midrule
+    $1$ & \texttt{-i}  & run interactively               & NONE          \\
+    $2$ & \texttt{-bi} & batch process interactively     & NONE          \\
+    $3$ & \texttt{-b}  & batch process (normal)%
+        & \texttt{batch\_run\_file}\ldots\\
+    $4$ & \texttt{-bm} & batch processing on multiple cores & \texttt{num\_cores}
+    \texttt{batch\_run\_file}\ldots\\
+    $5$ & \texttt{-g}  & GIF Creation Tool               & NONE          \\
+    \bottomrule
+    \end{tabular}
+    \caption[\texttt{jspamcli.py} command line options]%
+    {List of command line options
+        available in \texttt{jspamcli.py}. In the \texttt{-b} and \texttt{-bm}
+        modes, multiple batch run files may be specified as long as they exist in
+        the \texttt{batch\_run\_files} directory in the root directory.
+    }
+    \label{table:jspamcli_table}
+\end{table}
+%
+
+
+

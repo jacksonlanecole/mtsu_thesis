@@ -1,64 +1,99 @@
+\clearpage
+
 \begin{figure}[H]
-    \label{fig: flowchart}
     \centering
     \begin{tikzpicture}[]
-        \tikzstyle{every node}=[font=\small]
+        \tikzstyle{every node}=[font=\scriptsize]
+        \linespread{1}
         \node [startstop] (start)
         {START};
 
-        \node [io, below = of start, text width=6cm] (inData1)
-        {SDSS DR7 image\\(processed with MergerEx \cite{holincheckThesis})};
+        \node [process, below = of start, yshift=-1cm, anchor=west, text width=3cm](process_image)
+        {Get, process image with MergerEx \cite{holincheckThesis}};
 
-        \node [process, below = of inData1, text width=12cm] (inData2)
-        {target SDSSID, run number(s), n1\_particles, n2\_particles};
+        \node [io, right = of process_image, yshift=1cm, text width=2cm] (mergerex_output_data)
+        {OUTPUT: Merger data from MergerEx};
 
-        \node [io, below = of inData2, text width=6cm] (inData3)
-        {Citizen Science initial conditions\\from run file for target SDSSID};
+        \node [io, right = of process_image, yshift=-1cm, text width=2cm] (processed_image)
+        {OUTPUT: SDSS DR7 image, processed};
 
-        \node [process, below = of inData3] (JSPAM)
+        \node [process, right = of processed_image, text width=4cm] (used_in_comparisons)
+        {Saved for comparison of simulation results with real images};
+
+        \node [process, right = of mergerex_output_data, text width=4cm] (used_in_attributes)
+        {Save as merger attributes in MergerRun instantiation};
+
+        \node [io, below = of process_image.west, anchor=west, yshift=-2cm, text width=4cm] (inData1)
+        {INPUT: target SDSSID, run number(s), n1\_particles, n2\_particles};
+
+        \node [io, below = of inData1, text width=5cm] (inData2)
+        {INPUT: Citizen Science initial conditions\\from run file for target SDSSID};
+
+        \node [process, below = of inData2, yshift=-1cm] (JSPAM)
         {JSPAM (Wallincode)};
 
+        \node [io, right = of inData2, text width=5cm] (outfile_root)
+        {OUTPUT: Run data in root directory with distinguisher};
 
-        \node [process, below = of JSPAM] (directories)
+        \node [process, below = of outfile_root, text width=5cm] (directories)
         {Create appropriate directory structure};
 
-        \node [io, below = of directories, text width=12cm] (initialFile)
-        {
-        \{SDSSID\}.\{run number\}.i.\{n1\_particles\}.\{n2\_particles\}.txt\\
-        \{SDSSID\}.\{run number\}.f.\{n1\_particles\}.\{n2\_particles\}.txt\\
-        info.txt (from MergerEx \cite{holincheckThesis})
-        };
 
-        \node [process, below = of initialFile] (imageCreator)
-        {Create images};
+        \node [process, below = of JSPAM, text width=5cm] (move_files)
+        {Move output files to appropriate location in created directory structure};
 
-
-        \node [io, below = of imageCreator, text width = 2cm] (machineScore)
-        {Machine score};
-
-        \node [process, left = of machineScore] (comp)
-        {Comparison code};
-
-        \node [startstop, right = of machineScore] (stop)
+        \node [startstop, right = of move_files, xshift=1.5cm, text width=5cm] (stop)
         {STOP};
 
-        \draw [arrow] (start) -- (inData1);
+
+        \draw [arrow] (start) -- (process_image);
+        \draw [arrow] (process_image) -| (mergerex_output_data);
+        \draw [arrow] (mergerex_output_data) -- (used_in_attributes);
+        \draw [arrow] (process_image) -| (processed_image);
+        \draw [arrow] (processed_image) -- (used_in_comparisons);
+
+        \draw [arrow] (used_in_comparisons.east) -- +(1,0) |- (inData1.east);
+        \draw [arrow] (used_in_attributes.east)  -- +(1,0) |- (inData1.east);
         \draw [arrow] (inData1) -- (inData2);
-        \draw [arrow] (inData2) -- (inData3);
-        \draw [arrow] (inData3) -- (JSPAM);
-        \draw [arrow] (JSPAM) -- (directories);
-        \draw [arrow] (directories) -- (initialFile);
-        \draw [arrow] (initialFile) -- (imageCreator);
-        \draw [arrow] (imageCreator) -| (comp);
-        \draw [arrow] (comp) -- (machineScore);
-        \draw [arrow] (machineScore) -- (stop);
+        \draw [arrow] (inData2) -- (JSPAM);
+        \draw [arrow] (JSPAM) -- (outfile_root);
+        \draw [arrow] (outfile_root) -- (directories);
+        \draw [arrow] (directories) -- (move_files);
+        \draw [arrow] (move_files) -- (stop);
+        %\node [process, below = of JSPAM] (directories)
+        %{Create appropriate directory structure};
+
+        %\node [io, below = of directories, text width=12cm] (initialFile)
+        %{
+        %\{SDSSID\}.\{run number\}.i.\{n1\_particles\}.\{n2\_particles\}.txt\\
+        %\{SDSSID\}.\{run number\}.f.\{n1\_particles\}.\{n2\_particles\}.txt\\
+        %info.txt (from MergerEx \cite{holincheckThesis})
+        %};
+
+        %\node [process, below = of initialFile] (imageCreator)
+        %{Create images};
+
+
+        %\node [io, below = of imageCreator, text width = 2cm] (machineScore)
+        %{Machine score};
+
+        %\node [process, left = of machineScore] (comp)
+        %{Comparison code};
+
+        %\node [startstop, right = of machineScore] (stop)
+        %{STOP};
+
 
 
 
     \end{tikzpicture}
-    \caption[Project Flowchart]{
-        Project flowchart. Here, it should be noted that our primary goal
-        was developing a framework for testing comparison codes. This endeavor
-        will likely see work in the near future.
+    \caption[Project flowchart]{Flowchart describing how a run is processed and
+        stored. It should be noted that tasks related to processing images with
+        MergerEx must be done manually, but must only be done once. Further, the
+        image creation suite that was developed alongside this project is not
+        included here, as it is considered to be largely separate. It can be
+        incorporated  immediately prior to \say{STOP}.
     }
+    \label{fig:flowchart}
 \end{figure}
+\clearpage

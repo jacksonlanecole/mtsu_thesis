@@ -1,11 +1,34 @@
-Although restricted three-body codes are in some cases less physically revealing
-than full $n$-body codes in simulating interactions and mergers of galaxy pairs,
-they are much faster and more computationally efficient in sampling a large
-solution space. For this reason, they are still widely used to reduce the
-initial parameter space of merger simulations before proceeding to more
-sophisticated, $n$-body models. In this work, we provide \texttt{jspamcli.py},
-a user-friendly interface for interacting with an existing restricted
-three-body code used in the Galaxy Zoo: Mergers project,
-JSPAM \cite{Wallin2016}, and to be used in conjunction with an rendered
-image creation and comparison suite which has been co-developed specifically
-to integrate with \texttt{jspamcli.py}.
+Restricted three-body codes are in some cases less physically revealing
+than their $n$-body counterparts in simulating interactions of galaxy pairs,
+but they are much faster and more computationally efficient.
+For this reason, restricted three-body codes are still widely used as a
+preliminary tool to reduce the size of the solution space
+of systems before proceeding to more computationally expensive
+$n$-body models, and further, can accurately simulate the large
+scale kinematic interactions in merging galaxies quite well.
+When simulating interactions of galaxy pairs, the initial
+conditions that result in the observed morphological features after the
+interaction are largely unknown, and therefore become a focus
+of work in the field of galactic mergers and collisions today.
+Citizen science efforts to systematically rank the convergence of these
+simulations have been carried out with good results~\cite{Holincheck2015},
+but these projects naturally rely heavily on human-in-the-loop processing.
+While the human eye is very successful at matching tasks based on
+sometimes subtle features as were important in~\citet{Holincheck2015},
+computational processes that involve humans are always subject to an upper
+limit on efficiency and volume of data that can be processed in a reasonable
+amount of time.
+A natural solution in modern times is to use machine learning techniques to
+systematically improve solutions, and is the
+logical next step in using JSPAM~\citet{Wallin2016}.
+Regardless of the computational technique, all data-intensive tasks in
+astronomy and astrophysics can benefit from having a standard pipeline through
+which data are collected, used, and stored, as well as a standard set of
+methods for interacting with the software. In support of this, and co-developed
+with an image creation and comparison suite we provide in
+this work \texttt{jspamcli.py}, a user-friendly interface developed to
+simplify interaction with an
+existing restricted three-body code used in the Galaxy Zoo: Mergers project,
+JSPAM \cite{Wallin2016}.
+We also restructure the project to aid in future development and add several
+tools that will be useful in continued efforts.

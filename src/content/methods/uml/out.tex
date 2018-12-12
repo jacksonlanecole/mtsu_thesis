@@ -1,0 +1,100 @@
+%\documentclass{article}
+%\usepackage[x11names, rgb]{xcolor}
+%\usepackage[utf8]{inputenc}
+%\usepackage{tikz}
+%\usetikzlibrary{snakes,arrows,shapes}
+%\usepackage{amsmath}
+%%
+%%
+%
+%%
+%
+%%
+%
+%\begin{document}
+%\pagestyle{empty}
+%%
+%%
+%%
+%
+%\enlargethispage{100cm}
+%% Start of code
+%% \begin{tikzpicture}[anchor=mid,>=latex',line join=bevel,]
+\begin{figure}[ht!]
+    \centering
+\begin{tikzpicture}[>=latex',line join=bevel,]
+  \pgfsetlinewidth{1bp}
+%%
+\pgfsetcolor{black}
+  % Edge: 2 -> 1
+  \draw [-diamond,solid] (135.46bp,80.574bp) .. controls (132.99bp,86.598bp) and (130.86bp,92.854bp)  .. (129.45bp,99.0bp) .. controls (127.93bp,105.63bp) and (126.61bp,112.39bp)  .. (123.63bp,131.23bp);
+  \definecolor{strokecol}{rgb}{0.0,1.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (147.94bp,106.0bp) node {height};
+  % Edge: 2 -> 1
+  \draw [-diamond,solid] (163.88bp,80.747bp) .. controls (164.86bp,91.24bp) and (165.3bp,102.54bp)  .. (164.44bp,113.0bp) .. controls (164.28bp,115.08bp) and (164.1bp,117.18bp)  .. (162.75bp,131.41bp);
+  \draw (181.39bp,106.0bp) node {width};
+  % Edge: 0 -> 1
+  \draw [-diamond,solid] (51.155bp,80.875bp) .. controls (53.798bp,91.367bp) and (56.741bp,102.63bp)  .. (59.666bp,113.0bp) .. controls (60.306bp,115.27bp) and (60.953bp,117.55bp)  .. (64.926bp,131.38bp);
+  \draw (92.334bp,106.0bp) node {dimensions};
+  % Node: 1
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (128.44bp,518.3bp) node {MergerRun};
+  \draw (62.36bp,496.3bp) node[right] {all\_point\_data : list};
+  \draw (62.36bp,482.3bp) node[right] {dimensions};
+  \draw (62.36bp,468.3bp) node[right] {filename};
+  \draw (62.36bp,454.3bp) node[right] {height};
+  \draw (62.36bp,440.3bp) node[right] {humanscores\_filename};
+  \draw (62.36bp,426.3bp) node[right] {info};
+  \draw (62.36bp,412.3bp) node[right] {init};
+  \draw (62.36bp,398.3bp) node[right] {name};
+  \draw (62.36bp,384.3bp) node[right] {primary : Galaxy};
+  \draw (62.36bp,370.3bp) node[right] {run};
+  \draw (62.36bp,356.3bp) node[right] {scores : list, NoneType};
+  \draw (62.36bp,342.3bp) node[right] {secondary : Galaxy};
+  \draw (62.36bp,328.3bp) node[right] {structure\_created : bool};
+  \draw (62.36bp,314.3bp) node[right] {target\_dirs};
+  \draw (62.36bp,300.3bp) node[right] {width};
+  \draw (62.36bp,278.3bp) node[right] {create()};
+  \draw (62.36bp,264.3bp) node[right] {existing\_structure()};
+  \draw (62.36bp,250.3bp) node[right] {fill\_all\_data()};
+  \draw (62.36bp,236.3bp) node[right] {get\_scores()};
+  \draw (62.36bp,222.3bp) node[right] {load\_data()};
+  \draw (62.36bp,208.3bp) node[right] {make\_gif()};
+  \draw (62.36bp,194.3bp) node[right] {make\_info\_dict()};
+  \draw (62.36bp,180.3bp) node[right] {plotting\_2d()};
+  \draw (62.36bp,166.3bp) node[right] {plotting\_3d\_for\_gif()};
+  \draw (62.36bp,152.3bp) node[right] {setup\_structure()};
+  \draw (62.36bp,138.3bp) node[right] {write\_scores()};
+\end{scope}
+  % Node: 0
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (41.44bp,65.3bp) node {Dimensions};
+  \draw (8.0bp,43.3bp) node[right] {image : list};
+  \draw (8.0bp,29.3bp) node[right] {real : list};
+  \draw (41.44bp,7.3bp) node {};
+\end{scope}
+  % Node: 2
+\begin{scope}
+  \definecolor{strokecol}{rgb}{0.0,0.0,0.0};
+  \pgfsetstrokecolor{strokecol}
+  \draw (157.05bp,65.3bp) node {Size};
+  \draw (138.44bp,43.3bp) node[right] {image};
+  \draw (138.44bp,29.3bp) node[right] {real};
+  \draw (157.05bp,7.3bp) node {};
+\end{scope}
+%
+\end{tikzpicture}
+\end{figure}
+% End of code
+
+%
+%\end{document}
+%
+
+
+

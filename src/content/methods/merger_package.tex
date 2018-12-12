@@ -1,0 +1,70 @@
+One of the primary challenges that arises in astronomy or astrophysics is
+simply doing adequate book-keeping of data and related meta-data.
+This project is no different.
+It was immediately necessary to develop a small,
+purpose-built Python package to do just that. Within the \texttt{merger} package
+found in the project repository, we make available the \texttt{Galaxy} and
+\texttt{MergerRun} classes, which can be see in Figures \ref{fig:cdgalaxy} and
+\ref{fig:cdmergerrun}, respectively.
+The \texttt{Galaxy} class only carries information related to the number of
+particles instantiated in the galaxy and the real and image positional
+information. \texttt{MergerRun} encapsulates all information and data relating
+to any particular run of JSPAM given some set of initial parameters. This class
+also contains methods for determining storage locations for output data,
+renaming files according to the appropriate naming conventions, handling the
+scores that are generated from fitness-functions, and even some handy plotting
+and visualization tools.
+%
+\subimport{uml/}{galaxy.tex}
+\subimport{uml/}{merger_run.tex}
+%
+Instantiation of a \texttt{MergerRun} is intended to require the fewest number
+of arguments possible to reduce book-keeping. It does so by utilizing an
+information file written by MergerEx during image preparation, which contains
+a list of pertinent information. One of the member functions within the
+\texttt{MergerRun} class creates a dictionary from this file, from which it then
+initializes several of the class instance attributes. An instance of this
+class also requires as parameters the number of particles to be initialized
+in each disk, the run number, and the initial simulation parameters that are
+found in the input files. In general, this can be done via the line in Listing
+~\ref{listing:mergerruninstant}.
+%
+\begin{lstlisting}[caption={Instantiating \texttt{MergerRun}}, label={listing:mergerruninstant}]
+merger_instance = MergerRun(path_to_info_file, n1_particles, n2_particles, run_number, init_sim_param_string)
+\end{lstlisting}
+%
+Having a dedicated MergerRun class allows for improved portability of
+data and information relating to a particular run of a merger.
+We expect
+programming using this class to remain a bit simpler and perhaps more clear.
+
+The MergerRun class also instantiates twice the previously mentioned
+\texttt{Galaxy} class;
+one is referred to as \texttt{primary} and the other \texttt{secondary}.
+We can therefore more clearly keep track of the SDSS ID or
+name and information relating to the disk centers,
+the right ascension and declination, and
+the Cartesian coordinates relative to the pixels in the frame.
+
+Within this package also a small package called \texttt{data\_tools} containing,
+as of writing, one class called \texttt{Structure}. \texttt{Structure} accepts
+an ordered list of directory and subdirectory names that will comprise a
+directory structure to be created, and further, provides a method that will
+check for the prior existence of the structure to prevent overwriting of data.
+Although this may seem unnecessary, this reduces the chance of error in
+organization of the large volume of simulation data that will be produced. As an
+example, the line in Listing~\ref{listing:structureusage}
+will create the following path in your current working directory:
+\texttt{root\_name/child\_1/child\_2/child\_3/}.
+%
+\begin{lstlisting}[caption={\texttt{Structure} usage}, label={listing:structureusage}]
+dir_structure = Structure(["root_name", "child_1", "child_2", "child_3"])
+\end{lstlisting}
+%
+%Further, we also provide \texttt{get\_target\_data}.
+%This is a module that scrapes
+%\texttt{https://data.galaxyzoo.org/mergers.html} for all of the
+%available target data, allows for a user to select from the targets available,
+%downloads and unarchives the data into an \texttt{input} directory in the
+%working directory. This is more apparently useful in the interactive
+%mode of \texttt{jspamcli.py}.

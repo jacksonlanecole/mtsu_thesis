@@ -10,10 +10,18 @@ PDFDOCSDIR := pdf
 
 RM = rm -rf
 
+all: thesis presentation
 
-docs: $(TEXSRCS)
-	@echo "Compiling: $(TEXSRCS)"
-	@latexmk -pdf -outdir=build -xelatex -cd $(TEXSRCS)
+thesis: $(SRCDIR)/thesis-jackson_cole.tex
+	@echo "Compiling: $<"
+	@latexmk -pdf -outdir=build -pdflatex="pdflatex" -cd $<
+	@make movepdfs
+	@$(RM) $(TEXBUILDDIRS)
+
+
+presentation: $(SRCDIR)/thesis_presentation-jackson_cole.tex
+	@echo "Compiling: $<"
+	@latexmk -pdf -outdir=build -xelatex -cd $<
 	@make movepdfs
 	@$(RM) $(TEXBUILDDIRS)
 
